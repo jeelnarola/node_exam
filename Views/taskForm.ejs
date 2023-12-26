@@ -29,7 +29,7 @@
 <script>
     let id=window.location.href.split("/")[4]
     console.log(id);
-    document.getElementById("list").addEventListener("click",(e)=>{
+    document.getElementById("list").addEventListener("submit",(e)=>{
         e.preventDefault()
         let type=document.getElementById("btn").value
         let obj={
