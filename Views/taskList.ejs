@@ -7,5 +7,69 @@
 </head>
 <body>
     <%- include("navbar") %>
+
+    <section>
+        <div class="conatiner">
+            <table>
+                <tr>
+                    <th>title</th>
+                    <th>category</th>
+                </tr>
+                <tbody class="Task">
+                    
+                </tbody>
+            </table>
+        </div>
+    </section>
+
 </body>
+<script>
+    const dele=(id)=>{
+        fetch(`/delete/${id}`,{
+            method:"DELETE"
+        })
+        window.location.reload()
+
+    }
+
+    const display=(data)=>{
+        document.querySelector(".Task").innerHTML=" "
+        data.map((ele)=>{
+            let tr=document.createElement("tr")
+
+            let title=document.createElement("td")
+            title.innerHTML=ele.title
+            let category=document.createElement("td")
+            category.innerHTML=ele.category
+
+            let delet=document.createElement("td")
+            let btn=document.createElement("button")
+            delet.append(btn)
+            btn.innerHTML="Delete"
+
+            btn.addEventListener("click",()=>dele(ele._id))
+
+
+            let up=document.createElement("td")
+            let upbtn=document.createElement("button")
+            up.append(upbtn)
+            upbtn.innerHTML="Upadet"
+            upbtn.addEventListener("click",()=>{
+                window.location.href=`/edit/${ele._id}`
+            })
+            tr.append(title,category,delet,up)
+
+            document.querySelector(".Task").append(tr)
+        })
+    }
+
+    const get=()=>{
+        fetch("/mytask")
+        .then((res)=>res.json())
+        .then((data)=>{
+            display(data)
+        })
+    }
+    get()
+</script>
 </html>

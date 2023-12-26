@@ -16,7 +16,10 @@ const login=(req,res)=>{
     res.render("login")
 } 
 const taskForm=(req,res)=>{
-    res.render("taskForm")
+    res.render("taskForm",{edit:false})
+}
+const taskItem=(req,res)=>{
+    res.render("taskItem")
 }
 
 // const register_Post=async(req,res)=>{
@@ -57,7 +60,7 @@ const signup = async(req,res)=>{
                     let obj={email,password:hash,username,role}
                     let data = await user.create(obj);
                     let token = jwt.sign({id : data._id, role : data.role}, "jeel");
-                    return res.cookie("token", token).cookie("role", data.role).send({msg : "User Signed up", value:data});
+                    return res.cookie("token", token).cookie("id",data.id).cookie("role", data.role).send({msg : "User Signed up", value:data});
                 }
             })
         }
@@ -79,7 +82,7 @@ const login_Post=async(req,res)=>{
             }
             if(done){
                 let token = jwt.sign({id : data._id, role : data.role}, "jeel");
-                return res.cookie("token", token).cookie("role", data.role).send({message:'Login Successfully'})
+                return res.cookie("token", token).cookie("id",data.id).cookie("role", data.role).send({message:'Login Successfully'})
             }else{
                 res.send("password worng!")
             }
@@ -97,8 +100,32 @@ const taskForm_post=async(req,res)=>{
     let {title,category}=req.body
     req.body.createdby=req.user.id
     
-    let data=await task.create(req.body)
+    let data=await (await task.create(req.body)).populate("createdby")
     res.send("task")
 
 }
-module.exports={home,register,taskList,login,taskForm,signup,login_Post,signout,taskForm_post}
+const taskListGet=(req,res)=>{
+    res.render("taskList")
+}
+
+const mytask=async(req,res)=>{
+    let {id}=req.cookies
+    let data=await task.find({createdby:id})
+    res.send(data)
+}
+
+const admindelet=async(req,res)=>{
+    let {id}=req.params
+    let data=await task.findByIdAndDelete(id)
+    res.send('delete')
+
+}
+
+
+
+const allTask=async(req,res)=>{
+    let data=await task.find()
+    res.send(data)
+}
+
+module.exports={home,register,taskList,login,taskItem,taskForm,signup,login_Post,signout,taskForm_post,mytask,taskListGet,admindelet,allTask}

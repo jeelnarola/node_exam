@@ -13,17 +13,43 @@
 
     <section>
         <div class="conatiner">
-            <form action="/taskForm" method="post">
-                <input type="text" name="title" placeholder="title">
+            <form id="list">
+                <input type="text" name="title" id="title" placeholder="title" value="<%= edit ? data.title : '' %>">
                 <select name="category" id="category">
                     <option value="medium">medium</option>
                     <option value="lower">lower</option>
                     <option value="upper">upper</option>
                 </select>
-            <button type="submit">submit</button>
+                <button type="submit" value="<%= edit ? 'edit' : 'submit' %>" id="btn"><%= edit ? 'edit' : 'submit' %></button>
             </form>
         </div>
     </section>
     
 </body>
+<script>
+    let id=window.location.href.split("/")[4]
+    console.log(id);
+    document.getElementById("list").addEventListener("click",(e)=>{
+        e.preventDefault()
+        let type=document.getElementById("btn").value
+        let obj={
+            title:document.getElementById("title").value,
+            category:document.getElementById("category").value,
+        }
+        console.log(obj);
+        if(type=="edit"){
+            fetch(`/edit/${id}`,{
+                method:"PATCH",
+                headers:{"content-type":"application/json"},
+                body:JSON.stringify(obj)
+            })
+        }else{
+            fetch("/taskForm",{
+                method:"POST",
+                headers:{"content-type":"application/json"},
+                body:JSON.stringify(obj)
+            })
+        }
+})
+</script>
 </html>
