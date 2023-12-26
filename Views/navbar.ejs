@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url(/stle.css);
+    </style>
+</head>
+<body>
+    <header>
+        <div class="conatiner">
+            <div class="row">
+                <nav>
+                    <ul class="row">
+                        <li><a href="/">task list</a></li>
+                        <li><a href="/taskForm"> task form</a></li>
+                        <li id="login"><a href="/login" >login</a></li>
+                        <li id="register"><a href="/register">register</a></li>
+                        <li id="signout" style="display: none;"><a href="/signout">sign-out</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+</body>
+<script>
+    let mycookie=document.cookie.split(";")[1]
+    let cookie=mycookie.split("=")[1]
+    if(cookie){
+        document.getElementById("login").style.display="none"
+        document.getElementById("register").style.display="none"
+        document.getElementById("signout").style.display="block"
+
+    }
+    else{
+        document.getElementById("login").style.display="block"
+        document.getElementById("register").style.display="block"
+        document.getElementById("signout").style.display="none" 
+    }
+</script>
+</html>

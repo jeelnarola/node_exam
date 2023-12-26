@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>taskForm</title>
+    <style>
+        @import url(/stle.css);
+    </style>
+</head>
+<body>
+    <%- include("navbar") %>
+
+    <section>
+        <div class="conatiner">
+            <form action="/taskForm" method="post">
+                <input type="text" name="title" placeholder="title">
+                <select name="category" id="category">
+                    <option value="medium">medium</option>
+                    <option value="lower">lower</option>
+                    <option value="upper">upper</option>
+                </select>
+            <button type="submit">submit</button>
+            </form>
+        </div>
+    </section>
+    
+</body>
+</html>

@@ -1,0 +1,29 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+.conatiner{
+    max-width: 1140px;
+    margin: auto;
+}
+.row{
+    display:flex ;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content:center ;
+}
+a{
+    text-decoration: none;
+}
+li{
+    list-style: none;
+}
+header .row nav ul li{
+    padding: 10px;
+    padding-top: 20px;
+    text-transform: uppercase;  
+}
+header .row nav ul li a{
+    color: black;
+}
